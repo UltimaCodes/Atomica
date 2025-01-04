@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Shaders\fragment_shader.glsl" />
+    <None Remove="Shaders\vertex_shader.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Shaders\fragment_shader.glsl" />
+    <Content Include="Shaders\vertex_shader.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.91.0.1" />
     <PackageReference Include="OpenTK" Version="4.9.3" />
   </ItemGroup>
