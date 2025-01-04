@@ -1,5 +1,3 @@
-Here’s a sample README for your Atomica project:
-
 ---
 
 # Atomica
@@ -108,5 +106,3 @@ Feel free to fork this repository and submit pull requests. Any improvements, bu
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-This README will provide clear guidance on the purpose and usage of Atomica, as well as allow others to easily contribute to the project. You can replace the placeholders with your actual GitHub username and repository link.
