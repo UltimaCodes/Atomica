@@ -1,30 +1,36 @@
-﻿namespace Quickie003;
-
-public class GameManager
+﻿namespace Quickie003
 {
-    private readonly MouseEmitter _mouseEmitter = new(); 
-
-    public void Init()
+    public class GameManager
     {
-        ParticleEmitterData ped = new()
+        private readonly MouseEmitter _mouseEmitter = new();
+
+        public GameManager()
         {
-            interval = 0.01f,
-            emitCount = 10,
-            angleVariance = 180f
-        };
+            Init();
+        }
 
-        ParticleEmitter pe = new(_mouseEmitter, ped);
-        ParticleManager.AddParticleEmitter(pe);
-    }
+        public void Init()
+        {
+            ParticleEmitterData ped = new()
+            {
+                interval = 0.01f,
+                emitCount = 10,
+                angleVariance = 180f
+            };
 
-    public static void Update()
-    {
-        InputManager.Update();
-        ParticleManager.Update();
-    }
+            ParticleEmitter pe = new(_mouseEmitter, ped);
+            ParticleManager.AddParticleEmitter(pe);
+        }
 
-    public static void Draw()
-    {
-        ParticleManager.Draw();
+        public void Update()
+        {
+            InputManager.Update();
+            ParticleManager.Update();
+        }
+
+        public void Draw()
+        {
+            ParticleManager.Draw();
+        }
     }
 }

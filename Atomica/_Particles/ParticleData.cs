@@ -4,34 +4,30 @@
     {
         private static Texture2D _defaultTexture;
         public Texture2D texture = _defaultTexture ??= Globals.Content.Load<Texture2D>("particle");
-        public float lifespan = 2f;
-        public Color colorStart = Color.Red;  // Starting color (can be any color)
-        public Color colorEnd = Color.Purple; // Ending color (can be any color)
+        public float lifespan = 3f;
+        public Color colorStart = Color.Red;
+        public Color colorEnd = Color.Purple;
         public float opacityStart = 1f;
         public float opacityEnd = 0f;
         public float sizeStart = 32f;
         public float sizeEnd = 4f;
         public float speed = 100f;
         public float angle = 0f;
+        public float initialSpread = 50f;  // Controls the spread radius
+        public float clumpingStrength = 0.1f;  // Controls the strength of the clumping
+        public float dragFactor = 0.98f;
 
         public ParticleData()
         {
         }
 
-        // Method to get the interpolated rainbow color based on lifespan or time
         public Color GetRainbowColor(float lifeProgress)
         {
-            // Ensure lifeProgress is between 0 and 1
             lifeProgress = Math.Clamp(lifeProgress, 0f, 1f);
-
-            // Calculate the hue based on lifeProgress (0 to 1)
-            float hue = lifeProgress;  // The hue will progress from 0 to 1 over the lifespan
-
-            // Convert the hue to a color (rainbow colors based on HSV)
-            return ColorFromHSV(hue * 360f, 1f, 1f);  // hue * 360 maps 0-1 to 0-360° for the rainbow
+            float hue = lifeProgress;
+            return ColorFromHSV(hue * 360f, 1f, 1f);
         }
 
-        // Helper method to convert HSV to Color (HSL to RGB)
         private Color ColorFromHSV(float hue, float saturation, float value)
         {
             int h = (int)(hue / 60) % 6;

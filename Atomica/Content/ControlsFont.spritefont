@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="Microsoft.Xna.Framework.Graphics.SpriteFont">
+    <FontName>Arial</FontName>
+    <Size>14</Size>
+  </Asset>
+</XnaContent>

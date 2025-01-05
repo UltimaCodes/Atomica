@@ -1,32 +1,41 @@
-﻿namespace Quickie003;
-
-public class ParticleEmitter(IEmitter emitter, ParticleEmitterData data)
+﻿namespace Quickie003
 {
-    private readonly ParticleEmitterData _data = data;
-    private float _intervalLeft = data.interval;
-    private readonly IEmitter _emitter = emitter;
-
-    private void Emit(Vector2 pos)
+    public class ParticleEmitter
     {
-        ParticleData d = _data.particleData;
-        d.lifespan = Globals.RandomFloat(_data.lifespanMin, _data.lifespanMax);
-        d.speed = Globals.RandomFloat(_data.speedMin, _data.speedMax);
-        d.angle = Globals.RandomFloat(_data.angle - _data.angleVariance, _data.angle + _data.angleVariance);
+        private readonly ParticleEmitterData _data;
+        private float _intervalLeft;
+        private readonly IEmitter _emitter;
 
-        Particle p = new(pos, d);
-        ParticleManager.AddParticle(p);
-    }
-
-    public void Update()
-    {
-        _intervalLeft -= Globals.TotalSeconds;
-        while (_intervalLeft <= 0f)
+        public ParticleEmitter(IEmitter emitter, ParticleEmitterData data)
         {
-            _intervalLeft += _data.interval;
-            var pos = _emitter.EmitPosition;
-            for (int i = 0; i < _data.emitCount; i++)
+            _emitter = emitter;
+            _data = data;
+            _intervalLeft = data.interval;
+        }
+
+        private void Emit(Vector2 pos)
+        {
+            ParticleData d = _data.particleData;
+            d.lifespan = Globals.RandomFloat(_data.lifespanMin, _data.lifespanMax);
+            d.speed = Globals.RandomFloat(_data.speedMin, _data.speedMax);
+            d.angle = Globals.RandomFloat(_data.angle - _data.angleVariance, _data.angle + _data.angleVariance);
+
+            Vector2 direction = new Vector2((float)Math.Cos(d.angle), (float)Math.Sin(d.angle));
+            Particle p = new(pos, d, direction);
+            ParticleManager.AddParticle(p);
+        }
+
+        public void Update()
+        {
+            _intervalLeft -= Globals.TotalSeconds;
+            while (_intervalLeft <= 0f)
             {
-                Emit(pos);
+                _intervalLeft += _data.interval;
+                var pos = _emitter.EmitPosition;
+                for (int i = 0; i < _data.emitCount; i++)
+                {
+                    Emit(pos);
+                }
             }
         }
     }

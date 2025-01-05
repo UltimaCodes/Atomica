@@ -1,49 +1,79 @@
-﻿namespace Quickie003;
-
-public static class ParticleManager
+﻿namespace Quickie003
 {
-    private static readonly List<Particle> _particles = [];
-    private static readonly List<ParticleEmitter> _particleEmitters = [];
-
-    public static void AddParticle(Particle p)
+    public static class ParticleManager
     {
-        _particles.Add(p);
-    }
+        private static readonly List<Particle> _particles = new();
+        private static readonly List<ParticleEmitter> _particleEmitters = new();
+        private static Vector2 _gravity = new(0, 9.8f); // Default gravity (downwards)
 
-    public static void AddParticleEmitter(ParticleEmitter e)
-    {
-        _particleEmitters.Add(e);
-    }
-
-    public static void UpdateParticles()
-    {
-        foreach (var particle in _particles)
+        public static void AddParticle(Particle p)
         {
-            particle.Update();
+            _particles.Add(p);
         }
 
-        _particles.RemoveAll(p => p.isFinished);
-    }
-
-    public static void UpdateEmitters()
-    {
-        foreach (var emitter in _particleEmitters)
+        public static void AddParticleEmitter(ParticleEmitter e)
         {
-            emitter.Update();
+            _particleEmitters.Add(e);
         }
-    }
 
-    public static void Update()
-    {
-        UpdateParticles();
-        UpdateEmitters();
-    }
-
-    public static void Draw()
-    {
-        foreach (var particle in _particles)
+        public static void UpdateEmitters()
         {
-            particle.Draw();
+            foreach (var emitter in _particleEmitters)
+            {
+                emitter.Update();
+            }
+        }
+
+        public static void Update()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                _gravity = new Vector2(0, -9.8f); // Gravity upwards
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                _gravity = new Vector2(0, 9.8f); // Gravity downwards (default)
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                _gravity = new Vector2(-9.8f, 0); // Gravity left
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                _gravity = new Vector2(9.8f, 0); // Gravity right
+
+            Vector2 cursorPosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                foreach (var particle in _particles)
+                {
+                    particle.StartFollowingCursor();
+                }
+            }
+            else
+            {
+                foreach (var particle in _particles)
+                {
+                    particle.StopFollowingCursor();
+                }
+            }
+
+            UpdateParticles(cursorPosition);
+            UpdateEmitters();
+        }
+
+        public static void UpdateParticles(Vector2 cursorPosition)
+        {
+            foreach (var particle in _particles)
+            {
+                particle.Update(_gravity, cursorPosition); // Pass cursor position
+            }
+
+            // Remove finished particles
+            _particles.RemoveAll(p => p.isFinished);
+        }
+
+
+        public static void Draw()
+        {
+            foreach (var particle in _particles)
+            {
+                particle.Draw();
+            }
         }
     }
 }

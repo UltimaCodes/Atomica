@@ -1,6 +1,7 @@
-﻿namespace Quickie003;
-
-public interface IEmitter
+﻿namespace Quickie003
 {
-    Vector2 EmitPosition { get; }
+    public interface IEmitter
+    {
+        Vector2 EmitPosition { get; }
+    }
 }
