@@ -1,4 +1,3 @@
-```markdown
 # Atomica
 
 **Atomica** is a 2D particle simulator written in C# using the MonoGame framework. The program allows for real-time particle simulation with Newtonian physics, featuring interactive controls for particle manipulation and visual customization. The simulator also includes a custom cursor and on-screen control instructions.
