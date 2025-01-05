@@ -46,4 +46,4 @@ This project is licensed under the MIT License.
 - **GameDev Quickie**: Extremely great tutorial on monogame and physics
 
 **Enjoy the simulation and have fun exploring Newtonian physics!**
-```
+---
