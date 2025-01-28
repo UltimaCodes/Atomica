@@ -45,5 +45,4 @@ This project is licensed under the MIT License.
 - **System.Drawing**: Used for text rendering to generate custom textures for control instructions.
 - **GameDev Quickie**: Extremely great tutorial on monogame and physics
 
-**Enjoy the simulation and have fun exploring Newtonian physics!**
 ---
